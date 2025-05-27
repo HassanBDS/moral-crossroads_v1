@@ -72,6 +72,14 @@
     @apply -translate-x-1 -translate-y-1 shadow-[6px_6px_0px_#000];
   }
 
+  .neal-box {
+    @apply border-2 border-black shadow-[2px_2px_0px_#000] transition-all duration-200 ease-in-out bg-white;
+  }
+  
+  .neal-box:hover {
+    @apply shadow-[3px_3px_0px_#000];
+  }
+
   .mummy-character {
     @apply stroke-black stroke-[3] fill-none;
     stroke-linecap: round;

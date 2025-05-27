@@ -1,0 +1,249 @@
+Okay, this is an ambitious and exciting vision! I understand the complete shift in the core interaction, the focus on character reactions, and the new multi-language requirement. This prompt will aim for precision and clarity to guide Replit towards the desired outcome.
+
+Let's confirm the project name: "Moral Crossroads".
+
+Here's the comprehensive prompt for Replit, integrating all your new requirements, design, and technical choices.
+
+Replit Prompt: Moral Crossroads - An Interactive Ethical Dilemma Game (Revised Final)
+
+Project Name: moral-crossroads-game
+
+Ultimate Goal: Build a dynamic, visually appealing web application that presents users with a series of interactive ethical dilemmas. The core innovation lies in personalized user interaction (with an optional user-uploaded photo), animated SVG characters, and clear visual feedback for choices and consequences, all powered by a Django backend and a robust JavaScript frontend. The game aims for the artistic simplicity and engaging interactivity of neal.fun, but with a deeper philosophical and personalized touch.
+
+ABSOLUTELY CRITICAL DIRECTIVES & CORE ARCHITECTURE:
+
+Core Interaction (No Trolley, No Tracks): The game's central interaction revolves around two prominent buttons (or more, later) representing choices. There are no "trolleys," "levels" (in the sense of physical environments), or "tracks." The visual focus is on the buttons and the reacting characters.
+
+Visual Design - General & Containers:
+
+Transparency/Minimalism: The colored boxes/blocks in the mockup (orange, green, yellow, magenta, cyan, light blue) are planning areas only and MUST NOT be rendered as solid colored blocks in the final UI. Instead, these areas should be transparent or resemble the minimal, clean, bordered text/button styles of neal.fun. The overall layout should be clean and spaced out.
+
+Global Fonts & Colors: Use JustSquash for main headlines and Composition-Regular (or a similar clear, readable sans-serif) for body text and buttons. Adhere to a clean, limited color palette (e.g., black lines, white backgrounds, specific accent colors like green, red, etc.).
+
+Custom SVG Character & Scene Generation (CRITICAL VISUAL FIDELITY):
+
+NO JPEG IMAGES for scene elements. The provided JPEGs (e.g., neal.fun screenshots, Squid Game image) are for visual inspiration only for the STYLE of the characters and buttons. You MUST create and render all characters and scene elements as scalable SVG vector graphics directly in the code or via a dynamic SVG rendering approach.
+
+Character Art Style: All characters (people, animals, objects) must adhere to a visually fancy, appealing, clean line-art style, reminiscent of the neal.fun "bandaged" or "mummy-like" figures (simple bodies, distinct heads/faces with eyes and mouths).
+
+Character Grouping: Groups of characters (e.g., 5 people, 4 people) MUST be rendered as clustered/stacked groups within a single SVG, visually similar to the original neal.fun aesthetic (e.g., five-guys.svg from previous iterations), not as individually spaced figures in a straight line.
+
+Dynamic Reactions (Animation): These characters need to show moving, in-action effects (e.g., "sleeping zzz", "screaming effects", "meowing", "suffering", "relieved", or visually dissolve/get replaced by a "splatted" SVG version if "killed"). This requires multiple SVG states per character and dynamic swapping/animation (likely via GSAP).
+
+Small Messages: Integrate small SVG text overlays or speech bubbles (e.g., "Mom!", "Friend!", "Your pet!") dynamically appearing with the character changes to emphasize identity or emotional state.
+
+Button SVGs: Create SVG representations for the Green ("O") and Red ("X") buttons inspired by the Squid Game image.
+
+Project Structure & File Layout:
+
+moral-crossroads-game/ (Root Directory)
+
+client/ (Frontend code)
+
+index.html (Main application entry point)
+
+css/
+
+style.css (Core styling, header, overall layout, character positioning, button styles)
+
+responsive.css (Media queries for responsive design)
+
+js/
+
+main.js (Game logic, UI interaction, API calls, scenario rendering, animation orchestration)
+
+scenarios.js (Defines scenario data: text, SVG references, choices, including localization for English and Arabic.)
+
+animation.js (Functions for character animations, impact effects using GSAP)
+
+api.js (Frontend API client for Django backend)
+
+localization.js (Handles language switching and text loading)
+
+assets/
+
+svgs/ (All custom-generated SVG files: button-green.svg, button-red.svg, you-male.svg, you-female.svg, you-nonbinary.svg, you-action-male.svg, you-action-female.svg, you-action-nonbinary.svg, five-people.svg, five-people-saved.svg, five-people-dead.svg, one-person.svg, one-person-suffering.svg, one-person-safe.svg, splat.svg, text-complicit.svg, text-bystander.svg, etc. Replit will create these.)
+
+fonts/ (Custom font files: Composition-Regular.woff2, JustSquash.woff2, Roboto-Medium.woff2.)
+
+images/ (For user-uploaded profile image placeholder if implemented, or default images.)
+
+server/ (Django Backend)
+
+project_name/ (Django project config)
+
+app_name/ (Django app for game logic/APIs)
+
+models.py (SQL database schema for User, ScenarioResult, ScenarioText, etc.)
+
+views.py (API endpoints for scenarios, choices, votes)
+
+serializers.py (For Django REST Framework, if used)
+
+urls.py
+
+db.sqlite3 (For local development database, will be PostgreSQL on Hetzner)
+
+manage.py
+
+README.md (Project overview and setup instructions)
+
+Core Functionality & UI/UX Requirements:
+
+Initial Setup Screen:
+
+Application MUST start with a distinct setup screen.
+
+User can enter an optional name (text input).
+
+User MUST select a gender (Male, Female, Non-Binary) via radio buttons.
+
+User Profile Photo: Allow an option for the user to upload their own photo to represent their character. This is a placeholder for now but should be designed for. If no photo is uploaded, use a default Male/Female/Non-Binary SVG character based on their selection.
+
+"Start Game" button initiates the main game (disabled until gender is chosen).
+
+Header Design:
+
+Left (Logo): Initials "MC" (for Moral Crossroads) in a stylized, eye-catching font within a clean, minimalist box.
+
+Center (Level Headline): "Level xyz : the headline of the level (like baby...)". This will dynamically display the dilemma's title/category (e.g., "The Unseen Consequence"). Use JustSquash font for the main headline part, Roboto-Medium for the subtitle. This entire block should resemble neal.fun's headline box (bordered, subtle shadow).
+
+Right (Profile/Donate/Language):
+
+"Profile Board" (text, to open profile settings/history - later).
+
+Language Switcher: A button/dropdown to toggle between English and Arabic. Ensure Right-to-Left (RTL) text direction and layout for Arabic.
+
+"Donate 💖" button: A prominent button leading to a placeholder URL (e.g., PayPal/other payment method). This button MUST have a subtle, non-annoying CSS animation of a "popping arrow" (-> icon or similar) appear next to it every 3-5 completed scenarios, then gently fade out after a few seconds.
+
+Scenario Text Area (Orange Area in Mockup):
+
+Contains the main descriptive text of the dilemma.
+
+CRITICAL: The choices are NOT embedded in this text area.
+
+Styling: Clean, bordered text block resembling neal.fun's text areas. Font and color per general guidelines.
+
+Choices & User Profile Area (Main Central Area):
+
+"First choice" (Green Area): Interactive button for the first choice. Visually, resembles the green "O" button from the Squid Game image (or a clear positive indicator). Contains the actual choice text.
+
+"Second choice" (Green Area): Interactive button for the second choice. Visually, resembles the red "X" button from the Squid Game image (or a clear negative indicator). Contains the actual choice text.
+
+Button Styling: Both buttons must have "fancy box" styling (distinct borders, box-shadows, subtle hover effects, clear visual change when selected).
+
+User Profile (Yellow Area): Located prominently between the choice buttons. Displays the user's uploaded photo (or default gender-specific SVG character). This area should have a hover effect revealing the option to upload a photo (placeholder functionality for now).
+
+Consequence Illustration Area (Magenta/Cyan Areas):
+
+This large area visually represents the consequences of the choices. It should be divided (e.g., horizontally side-by-side) into two distinct sections.
+
+Left (Magenta Area): Illustrates the consequence of the user's CHOSEN action. Contains animated SVG characters reacting to the chosen outcome.
+
+Right (Cyan Area): Illustrates the consequence of the ALTERNATIVE (not chosen) action. Contains animated SVG characters reacting to the non-chosen outcome.
+
+Voting Statistics Area (Light Blue Area):
+
+Displays voting statistics.
+
+Donut chart (or pie chart) format showing percentages.
+
+DO NOT display the total count of users/votes. Only percentages.
+
+Styling: Resemble neal.fun's voting display (minimalist, clear percentages, likely a graphical element like a partial circle).
+
+Complex Example Scenario for Replit to Implement (as a demonstration):
+
+Implement this scenario fully to demonstrate all capabilities, including multi-language support (English and Arabic), custom SVG characters, and detailed animations.
+
+Scenario: "The Unseen Consequence"
+
+ID: 1 (for backend linking)
+
+Title (English): "The Unseen Consequence"
+
+Title (Arabic): "العواقب الخفية" (Al-Awāqib al-Khafīyah`)
+
+Problem Description (English): "A group of 5 innocent people are unknowingly trapped in a collapsing structure. You have two large buttons before you. Pressing the GREEN button will instantly save them, but it will also unleash a plague that will slowly affect 1 other innocent person elsewhere in the world, causing them prolonged suffering before death. Pressing the RED button does nothing, leaving the 5 people to die instantly, but saving the distant person from the plague."
+
+Problem Description (Arabic): "مجموعة من 5 أشخاص أبرياء محاصرون في هيكل آيل للسقوط. أمامك زران كبيران. الضغط على الزر الأخضر سينقذهم فوراً، لكنه سيطلق وباءً يؤثر ببطء على شخص بريء آخر في مكان ما من العالم، مسبباً له معاناة طويلة قبل الموت. الضغط على الزر الأحمر لا يفعل شيئاً، مما يترك 5 أشخاص ليموتوا فوراً، لكنه ينقذ الشخص البعيد من الوباء."
+
+Choice 1 Button Label (English): "Press GREEN (Save 5, Harm 1 Slowly)"
+
+Choice 1 Button Label (Arabic): "اضغط الأخضر (أنقذ 5، اضرار 1 ببطء)" (Idghat al-Akhḍar: Anqidh 5, Idrār 1 bi-buṭ')
+
+Choice 2 Button Label (English): "Press RED (5 Die, 1 Safe)"
+
+Choice 2 Button Label (Arabic): "اضغط الأحمر (5 يموتون، 1 آمن)" (Idghat al-Aḥmar: 5 Yamūtūn, 1 Āmin)
+
+Illustration Elements (SVGs to create by Replit):
+
+button-green.svg (Round green button, 'O' icon)
+
+button-red.svg (Round red button, 'X' icon)
+
+you-male.svg / you-female.svg / you-nonbinary.svg (User's character in neutral pose for profile area)
+
+you-action-male.svg / you-action-female.svg / you-action-nonbinary.svg (User's character with arm extended, hand near a button, reflecting interaction)
+
+five-people-trapped.svg (5 clustered, mummy-like people in a collapsing structure/cage, looking terrified/desperate.)
+
+five-people-saved.svg (The same 5 people, but now free and looking relieved/happy.)
+
+five-people-dead.svg (The same 5 people, but "splatted" or clearly deceased-looking, possibly with splat.svg overlay.)
+
+one-person-healthy.svg (1 single, mummy-like person, looking unaware or happy, representing the distant person.)
+
+one-person-suffering.svg (The same single person, looking sickly/suffering, perhaps with abstract "pain" lines or faded color.)
+
+one-person-safe.svg (The same single person, looking safe and clear.)
+
+splat.svg (General splat effect SVG.)
+
+Text SVGs: svg-text-relieved.svg (e.g., "Relieved!", fades in over saved group), svg-text-suffering.svg (e.g., "Suffering...", fades in over affected person), svg-text-dead.svg (e.g., "Dead.", for splatted group), svg-text-safe.svg (e.g., "Safe!", for the unaffected person).
+
+Animation Details (for "The Unseen Consequence" scenario):
+
+Initial: Green and Red buttons are static. Left consequence area: five-people-trapped.svg. Right consequence area: one-person-healthy.svg.
+
+On "Press GREEN" choice:
+
+User character's SVG changes to you-action-[gender].svg.
+
+Green button animates (presses down, lights up).
+
+Status text (temporarily visible above buttons): "Activating mechanism..."
+
+After 1.5 seconds: Left consequence area changes to five-people-saved.svg (perhaps with a subtle animation of the cage opening), and svg-text-relieved.svg fades in. Right consequence area changes to one-person-suffering.svg (fading to a sickly color or adding pain lines), and svg-text-suffering.svg fades in.
+
+On "Press RED" choice:
+
+User character's SVG remains you-[gender].svg.
+
+Red button animates (presses down, lights up).
+
+Status text: "Accepting fate..."
+
+After 1.5 seconds: Left consequence area changes to five-people-dead.svg (with splat.svg appearing, and svg-text-dead.svg fading in). Right consequence area changes to one-person-safe.svg (perhaps with a subtle sigh of relief animation), and svg-text-safe.svg fades in.
+
+Technical Architecture (Review & Confirm):
+
+Frontend (HTML, CSS, JS, GSAP, Fetch API): Replit's choice of technologies to deliver the visual fidelity and animation is key. GSAP is strongly recommended for animations.
+
+Backend (Django + SQL/PostgreSQL): Standard Django project setup.
+
+Models:
+
+Scenario: id, title_en, title_ar, description_en, description_ar, choice1_label_en, choice1_label_ar, choice2_label_en, choice2_label_ar, illustration_state_json (JSONField to link SVGs/animations), etc.
+
+ChoiceResult: scenario_id (ForeignKey), user_id (ForeignKey, if users implemented), chosen_option (integer 1/2), timestamp.
+
+User (Django's built-in User model or custom): username, gender, profile_photo (ImageField).
+
+GlobalStatistics: scenario_id (ForeignKey), choice1_count, choice2_count. (Aggregated counts from ChoiceResult or calculated on-the-fly).
+
+APIs: Django REST Framework is a good choice for structured JSON APIs.
+
+Final Request to Replit:
+
+Build the "Moral Crossroads" project using the precise specifications above. Focus on implementing the complex "The Unseen Consequence" scenario as a full demonstration, including the creation of all described SVG characters, dynamic multi-language text (English and Arabic with RTL support), user profile image (placeholder design for upload option), accurate animations for choice and consequence (GSAP), and initial Django backend integration for data persistence and API endpoints. Ensure the setup screen, header design, and voting statistics are implemented as described. The goal is a highly functional and visually engaging learning platform.

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SetupModal } from '@/components/setup-modal';
-import { MoralCrossroads } from '@/components/moral-crossroads';
+import { GameBoard } from '@/components/game-board';
 import { useGameState } from '@/hooks/use-game-state';
 
 export default function Home() {
@@ -27,23 +27,23 @@ export default function Home() {
 
   const texts = {
     en: {
-      brand: "MORAL CROSSROADS",
+      brand: "MC",
+      brandFull: "MORAL CROSSROADS",
       subtitle: "Interactive Ethical Dilemmas",
-      title: "Moral Crossroads",
       donate: "Donate 💖",
       profile: "Profile Board"
     },
     ar: {
-      brand: "مفترق الأخلاق",
+      brand: "م ق",
+      brandFull: "مفترق الأخلاق",
       subtitle: "معضلات أخلاقية تفاعلية", 
-      title: "مفترق الأخلاق",
       donate: "تبرع 💖",
       profile: "لوحة الملف الشخصي"
     }
   };
 
   return (
-    <div className={`min-h-screen bg-white font-inter ${language === 'ar' ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen bg-white font-inter ${language === 'ar' ? 'rtl' : 'ltr'}`} dir={language === 'ar' ? 'rtl' : 'ltr'}>
       <SetupModal
         isOpen={state.showSetup}
         onComplete={handleSetupComplete}
@@ -52,32 +52,25 @@ export default function Home() {
 
       {state.gameStarted && (
         <>
-          {/* Header */}
-          <header className="p-4">
+          {/* Clean Neal.fun Style Header */}
+          <header className="p-6 border-b-2 border-black">
             <div className="max-w-6xl mx-auto">
-              <div className="grid grid-cols-3 gap-4 items-center">
-                {/* Left - Brand Logo */}
-                <div className="fancy-box bg-blue-500 text-white p-4">
-                  <h1 className="text-lg font-bold">{texts[language].brand}</h1>
-                  <p className="text-sm opacity-90">{texts[language].subtitle}</p>
+              <div className="flex items-center justify-between">
+                {/* Left - MC Logo */}
+                <div className="neal-box p-4">
+                  <h1 className="text-2xl font-bold text-black">{texts[language].brand}</h1>
+                  <p className="text-xs text-gray-600 mt-1">{texts[language].brandFull}</p>
                 </div>
                 
-                {/* Center - Level Title */}
-                <div className="fancy-box bg-purple-400 text-white p-4 text-center">
-                  <h2 className="text-xl font-bold">
-                    Level {state.currentLevel}: {texts[language].title}
-                  </h2>
-                </div>
-                
-                {/* Right - Profile & Controls */}
-                <div className="flex items-center gap-2 justify-end">
+                {/* Right - Controls */}
+                <div className="flex items-center gap-4">
                   <button
                     onClick={toggleLanguage}
-                    className="fancy-box bg-gray-100 px-3 py-2 text-sm font-medium hover:bg-gray-200"
+                    className="neal-box px-4 py-2 text-sm font-medium bg-white hover:bg-gray-50"
                   >
                     {language === 'en' ? 'العربية' : 'English'}
                   </button>
-                  <div className="fancy-box bg-blue-600 text-white px-3 py-2 text-sm">
+                  <div className="neal-box px-4 py-2 text-sm bg-gray-100">
                     {texts[language].profile}
                   </div>
                   <div className="relative">
@@ -85,7 +78,7 @@ export default function Home() {
                       href="https://www.paypal.com/donate/?hosted_button_id=YOUR_BUTTON_ID"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="fancy-box bg-red-500 text-white px-4 py-2 text-sm font-medium hover:bg-red-600 transition-colors"
+                      className="neal-box px-4 py-2 text-sm font-medium bg-red-500 text-white hover:bg-red-600 transition-colors"
                     >
                       {texts[language].donate}
                     </a>
@@ -102,7 +95,7 @@ export default function Home() {
 
           {/* Game Content */}
           {state.playerId && (
-            <MoralCrossroads
+            <GameBoard
               playerId={state.playerId}
               playerName={state.playerName}
               playerGender={state.playerGender}
