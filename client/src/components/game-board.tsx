@@ -111,115 +111,148 @@ export function GameBoard({ playerId, playerName, playerGender, currentLevel, la
   };
 
   return (
-    <main className="max-w-6xl mx-auto p-6">
-      {/* Level Header */}
-      <div className="neal-box bg-orange-100 p-6 mb-8 text-center">
-        <h2 className="text-2xl font-bold mb-2">Level {currentLevel}: {title}</h2>
-        <p className="text-lg leading-relaxed">{description}</p>
+    <main className="max-w-6xl mx-auto p-6 relative z-10">
+      {/* Futuristic Level Header */}
+      <div className="glass-panel p-8 mb-8 text-center">
+        <h2 className="text-3xl font-bold mb-4 neon-text">Level {currentLevel}: {title}</h2>
+        <p className="text-lg leading-relaxed text-gray-200 max-w-4xl mx-auto">{description}</p>
       </div>
 
-      {/* Status Text */}
+      {/* Status Text with Neon Effect */}
       {statusText && (
-        <div className="text-center text-xl font-bold text-blue-600 mb-6">
-          {statusText}
+        <div className="text-center text-2xl font-bold mb-8" style={{ color: 'var(--neon-blue)' }}>
+          <div className="animate-pulse">{statusText}</div>
         </div>
       )}
 
       {/* Main Choice Area */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
         {/* Green Choice Button */}
         <div className="order-1 lg:order-1">
-          <Button
+          <button
             onClick={() => handleChoice('green')}
             disabled={!!currentChoice || voteMutation.isPending}
-            className={`w-full h-40 neal-box text-white text-lg font-bold transition-all duration-300 ${
-              currentChoice === 'green' 
-                ? 'bg-green-600 scale-95 shadow-[2px_2px_0px_#000]' 
-                : 'bg-green-500 hover:bg-green-600'
+            className={`w-full h-48 neon-button green text-xl font-bold ${
+              currentChoice === 'green' ? 'pressed' : ''
             }`}
           >
             <div className="text-center">
-              <div className="text-7xl mb-3">○</div>
-              <div className="text-sm px-2">{choice1Text}</div>
+              <div className="text-8xl mb-4">○</div>
+              <div className="text-sm px-4 leading-tight">{choice1Text}</div>
             </div>
-          </Button>
+          </button>
         </div>
 
-        {/* User Profile (Center) */}
+        {/* Enhanced User Profile (Center) */}
         <div className="order-3 lg:order-2">
-          <div className="neal-box bg-yellow-100 p-4 h-40 flex flex-col items-center justify-center">
-            <div className="text-center">
-              <svg width="80" height="100" viewBox="0 0 80 100" className="mx-auto mb-2">
-                {/* Character Avatar */}
-                <circle cx="40" cy="25" r="15" stroke="#000" strokeWidth="2" fill="#fff" />
-                <circle cx="35" cy="22" r="2" fill="#000" />
-                <circle cx="45" cy="22" r="2" fill="#000" />
-                <path d="M 35 28 Q 40 32 45 28" stroke="#000" strokeWidth="2" fill="none" />
-                <rect x="28" y="35" width="24" height="30" stroke="#000" strokeWidth="2" fill="#fff" rx="3" />
-                <line x1="28" y1="45" x2="15" y2="55" stroke="#000" strokeWidth="2" strokeLinecap="round" />
-                <line x1="52" y1="45" x2="65" y2="55" stroke="#000" strokeWidth="2" strokeLinecap="round" />
-                <line x1="34" y1="65" x2="34" y2="85" stroke="#000" strokeWidth="2" strokeLinecap="round" />
-                <line x1="46" y1="65" x2="46" y2="85" stroke="#000" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-              <div className="text-xs font-medium">
-                <div>{playerName}</div>
-                <div>{playerGender}</div>
+          <div className="glass-panel p-6 h-48 flex flex-col items-center justify-center">
+            <div className="profile-avatar w-20 h-20 mb-4">
+              <div className="avatar-inner w-full h-full flex items-center justify-center">
+                <svg width="60" height="70" viewBox="0 0 60 70" className="character-enhanced">
+                  {/* Enhanced Character Avatar */}
+                  <circle cx="30" cy="20" r="12" stroke="currentColor" strokeWidth="2" fill="none" />
+                  <circle cx="26" cy="17" r="1.5" fill="currentColor" />
+                  <circle cx="34" cy="17" r="1.5" fill="currentColor" />
+                  <path d="M 26 23 Q 30 26 34 23" stroke="currentColor" strokeWidth="2" fill="none" />
+                  <rect x="24" y="30" width="12" height="20" stroke="currentColor" strokeWidth="2" fill="none" rx="2" />
+                  <line x1="24" y1="38" x2="16" y2="46" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="36" y1="38" x2="44" y2="46" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="27" y1="50" x2="27" y2="62" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="33" y1="50" x2="33" y2="62" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </svg>
               </div>
+            </div>
+            <div className="text-center text-white">
+              <div className="font-bold text-lg">{playerName}</div>
+              <div className="text-sm text-blue-300 capitalize">{playerGender}</div>
             </div>
           </div>
         </div>
 
         {/* Red Choice Button */}
         <div className="order-2 lg:order-3">
-          <Button
+          <button
             onClick={() => handleChoice('red')}
             disabled={!!currentChoice || voteMutation.isPending}
-            className={`w-full h-40 neal-box text-white text-lg font-bold transition-all duration-300 ${
-              currentChoice === 'red' 
-                ? 'bg-red-600 scale-95 shadow-[2px_2px_0px_#000]' 
-                : 'bg-red-500 hover:bg-red-600'
+            className={`w-full h-48 neon-button red text-xl font-bold ${
+              currentChoice === 'red' ? 'pressed' : ''
             }`}
           >
             <div className="text-center">
-              <div className="text-7xl mb-3">✕</div>
-              <div className="text-sm px-2">{choice2Text}</div>
+              <div className="text-8xl mb-4">✕</div>
+              <div className="text-sm px-4 leading-tight">{choice2Text}</div>
             </div>
-          </Button>
+          </button>
         </div>
       </div>
 
-      {/* Character Consequence Scenes */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        {/* Left Scene */}
-        <div className="neal-box bg-purple-100 p-6 h-64">
-          <h4 className="text-lg font-bold mb-4 text-center">
+      {/* Enhanced Character Consequence Scenes */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        {/* Left Consequence Scene */}
+        <div className="glass-panel p-8 min-h-80">
+          <h4 className="text-xl font-bold mb-6 text-center text-purple-300">
             {language === 'ar' ? 'المجموعة الأولى' : 'Group 1'}
           </h4>
           <div className="flex justify-center">
-            <svg width="200" height="160" viewBox="0 0 200 160">
-              {/* Render characters based on scenario type and animation state */}
-              {Array.from({ length: scenario.type === 'consequence' ? 5 : scenario.type === 'bystander' ? 2 : 4 }, (_, i) => {
-                const x = (i % 3) * 40 + 30;
-                const y = Math.floor(i / 3) * 50 + 40;
-                const isAffected = currentChoice === 'green' ? true : false;
+            <svg width="240" height="200" viewBox="0 0 240 200">
+              {/* Render enhanced characters with better spacing and details */}
+              {Array.from({ length: 5 }, (_, i) => {
+                const positions = [
+                  { x: 120, y: 60 },   // Center front
+                  { x: 80, y: 80 },    // Left
+                  { x: 160, y: 80 },   // Right
+                  { x: 100, y: 100 },  // Back left
+                  { x: 140, y: 100 }   // Back right
+                ];
+                const pos = positions[i];
+                const isAffected = currentChoice === 'green';
+                const shouldAnimate = isAnimating || showResults;
                 
                 return (
-                  <g key={i} transform={`translate(${x}, ${y})`}>
+                  <g key={i} transform={`translate(${pos.x}, ${pos.y})`} 
+                     className={`character-enhanced ${shouldAnimate && isAffected ? 'affected' : ''}`}>
+                    {/* Enhanced character body */}
                     <circle 
-                      cx="0" cy="0" r="12" 
-                      stroke="#000" strokeWidth="2" 
-                      fill={isAffected && showResults ? '#22c55e' : '#fff'}
-                      className={isAnimating ? 'transition-all duration-1000' : ''}
+                      cx="0" cy="-15" r="15" 
+                      stroke="currentColor" strokeWidth="2" 
+                      fill="none"
+                      className="transition-all duration-1000"
                     />
-                    <circle cx="-4" cy="-3" r="1.5" fill="#000" />
-                    <circle cx="4" cy="-3" r="1.5" fill="#000" />
-                    <path d="M -3 3 Q 0 6 3 3" stroke="#000" strokeWidth="1.5" fill="none" />
-                    <line x1="0" y1="12" x2="0" y2="30" stroke="#000" strokeWidth="2" />
-                    <line x1="0" y1="18" x2="-8" y2="26" stroke="#000" strokeWidth="2" />
-                    <line x1="0" y1="18" x2="8" y2="26" stroke="#000" strokeWidth="2" />
-                    {showResults && isAffected && (
-                      <text x="0" y="40" textAnchor="middle" fontSize="8" fill="#22c55e">
-                        {language === 'ar' ? 'آمن!' : 'Safe!'}
+                    {/* Eyes */}
+                    <circle cx="-5" cy="-18" r="2" fill="currentColor" />
+                    <circle cx="5" cy="-18" r="2" fill="currentColor" />
+                    {/* Mouth - changes based on state */}
+                    <path 
+                      d={showResults && isAffected ? "M -5 -10 Q 0 -6 5 -10" : "M -5 -8 Q 0 -12 5 -8"} 
+                      stroke="currentColor" strokeWidth="2" fill="none" 
+                    />
+                    {/* Body */}
+                    <rect x="-8" y="0" width="16" height="25" stroke="currentColor" strokeWidth="2" fill="none" rx="3" />
+                    {/* Arms */}
+                    <line x1="-8" y1="8" x2="-20" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="8" y1="8" x2="20" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    {/* Legs */}
+                    <line x1="-4" y1="25" x2="-4" y2="40" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="4" y1="25" x2="4" y2="40" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    
+                    {/* Status text */}
+                    {showResults && (
+                      <text x="0" y="55" textAnchor="middle" fontSize="10" 
+                            fill={isAffected ? 'var(--neon-green)' : 'var(--neon-red)'}>
+                        {isAffected ? (language === 'ar' ? 'آمن!' : 'Safe!') : 
+                                     (language === 'ar' ? 'ضحية' : 'Victim')}
+                      </text>
+                    )}
+                    
+                    {/* Special labels for some characters */}
+                    {i === 0 && (
+                      <text x="0" y="-35" textAnchor="middle" fontSize="8" fill="var(--neon-blue)">
+                        {language === 'ar' ? 'أمك' : 'Your Mom'}
+                      </text>
+                    )}
+                    {i === 1 && (
+                      <text x="0" y="-35" textAnchor="middle" fontSize="8" fill="var(--neon-purple)">
+                        {language === 'ar' ? 'صديقك' : 'Friend'}
                       </text>
                     )}
                   </g>
@@ -229,81 +262,161 @@ export function GameBoard({ playerId, playerName, playerGender, currentLevel, la
           </div>
         </div>
 
-        {/* Right Scene */}
-        <div className="neal-box bg-cyan-100 p-6 h-64">
-          <h4 className="text-lg font-bold mb-4 text-center">
+        {/* Right Consequence Scene */}
+        <div className="glass-panel p-8 min-h-80">
+          <h4 className="text-xl font-bold mb-6 text-center text-cyan-300">
             {language === 'ar' ? 'المجموعة الثانية' : 'Group 2'}
           </h4>
           <div className="flex justify-center">
-            <svg width="200" height="160" viewBox="0 0 200 160">
-              {/* Single character for group 2 */}
-              <g transform="translate(100, 80)">
+            <svg width="240" height="200" viewBox="0 0 240 200">
+              {/* Single character with pet */}
+              <g transform="translate(120, 100)" 
+                 className={`character-enhanced ${isAnimating || showResults ? 
+                   (currentChoice === 'green' ? 'suffering' : 'affected') : ''}`}>
+                {/* Main character */}
                 <circle 
-                  cx="0" cy="0" r="12" 
-                  stroke="#000" strokeWidth="2" 
-                  fill={currentChoice === 'red' && showResults ? '#22c55e' : currentChoice === 'green' && showResults ? '#f59e0b' : '#fff'}
-                  className={isAnimating ? 'transition-all duration-1000' : ''}
+                  cx="0" cy="-15" r="15" 
+                  stroke="currentColor" strokeWidth="2" 
+                  fill="none"
                 />
-                <circle cx="-4" cy="-3" r="1.5" fill="#000" />
-                <circle cx="4" cy="-3" r="1.5" fill="#000" />
-                <path d="M -3 3 Q 0 6 3 3" stroke="#000" strokeWidth="1.5" fill="none" />
-                <line x1="0" y1="12" x2="0" y2="30" stroke="#000" strokeWidth="2" />
-                <line x1="0" y1="18" x2="-8" y2="26" stroke="#000" strokeWidth="2" />
-                <line x1="0" y1="18" x2="8" y2="26" stroke="#000" strokeWidth="2" />
-                {showResults && currentChoice === 'green' && (
-                  <text x="0" y="40" textAnchor="middle" fontSize="8" fill="#f59e0b">
-                    {language === 'ar' ? 'ألم' : 'Pain'}
+                <circle cx="-5" cy="-18" r="2" fill="currentColor" />
+                <circle cx="5" cy="-18" r="2" fill="currentColor" />
+                <path 
+                  d={showResults && currentChoice === 'green' ? "M -5 -8 Q 0 -12 5 -8" : "M -5 -10 Q 0 -6 5 -10"} 
+                  stroke="currentColor" strokeWidth="2" fill="none" 
+                />
+                <rect x="-8" y="0" width="16" height="25" stroke="currentColor" strokeWidth="2" fill="none" rx="3" />
+                <line x1="-8" y1="8" x2="-20" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <line x1="8" y1="8" x2="20" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <line x1="-4" y1="25" x2="-4" y2="40" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <line x1="4" y1="25" x2="4" y2="40" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                
+                {/* Pet dog/cat beside them */}
+                <g transform="translate(25, 15)">
+                  <ellipse cx="0" cy="0" rx="8" ry="5" stroke="currentColor" strokeWidth="2" fill="none" />
+                  <circle cx="-6" cy="-3" r="4" stroke="currentColor" strokeWidth="2" fill="none" />
+                  <circle cx="-8" cy="-5" r="1" fill="currentColor" />
+                  <circle cx="-4" cy="-5" r="1" fill="currentColor" />
+                  <line x1="8" y1="-2" x2="15" y2="-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </g>
+                
+                {/* Status text */}
+                {showResults && (
+                  <text x="0" y="65" textAnchor="middle" fontSize="10" 
+                        fill={currentChoice === 'green' ? 'var(--neon-red)' : 'var(--neon-green)'}>
+                    {currentChoice === 'green' ? (language === 'ar' ? 'يعاني' : 'Suffering') : 
+                                                (language === 'ar' ? 'آمن!' : 'Safe!')}
                   </text>
                 )}
-                {showResults && currentChoice === 'red' && (
-                  <text x="0" y="40" textAnchor="middle" fontSize="8" fill="#22c55e">
-                    {language === 'ar' ? 'آمن!' : 'Safe!'}
-                  </text>
-                )}
+                
+                {/* Character label */}
+                <text x="0" y="-35" textAnchor="middle" fontSize="8" fill="var(--neon-blue)">
+                  {language === 'ar' ? 'حيوانك الأليف' : 'Your Pet'}
+                </text>
               </g>
             </svg>
           </div>
         </div>
       </div>
 
-      {/* Voting Statistics */}
+      {/* Neal.fun Style Voting Statistics */}
       {showResults && stats && (
-        <div className="neal-box bg-blue-50 p-6 mb-8">
-          <h3 className="font-semibold text-lg mb-4">{texts[language].stats}</h3>
-          <div className="space-y-4">
-            <div>
-              <div className="flex justify-between mb-2">
-                <span>{choice1Text}</span>
-                <span className="font-bold text-green-600">{(stats as any).choice1Percent || 0}%</span>
-              </div>
-              <Progress 
-                value={(stats as any).choice1Percent || 0} 
-                className="h-3 bg-gray-200"
+        <div className="glass-panel p-8 mb-12">
+          <h3 className="font-semibold text-2xl mb-8 text-center neon-text">{texts[language].stats}</h3>
+          <div className="flex justify-center">
+            <svg width="300" height="300" viewBox="0 0 300 300" className="mx-auto">
+              {/* Donut Chart Background */}
+              <circle
+                cx="150"
+                cy="150"
+                r="100"
+                fill="none"
+                stroke="rgba(255, 255, 255, 0.1)"
+                strokeWidth="20"
               />
+              
+              {/* Green Choice Arc */}
+              <circle
+                cx="150"
+                cy="150"
+                r="100"
+                fill="none"
+                stroke="var(--neon-green)"
+                strokeWidth="20"
+                strokeDasharray={`${(((stats as any).choice1Percent || 0) * 628) / 100} 628`}
+                strokeDashoffset="0"
+                transform="rotate(-90 150 150)"
+                className="stats-donut"
+                style={{
+                  filter: 'drop-shadow(0 0 10px var(--neon-green))'
+                }}
+              />
+              
+              {/* Red Choice Arc */}
+              <circle
+                cx="150"
+                cy="150"
+                r="100"
+                fill="none"
+                stroke="var(--neon-red)"
+                strokeWidth="20"
+                strokeDasharray={`${(((stats as any).choice2Percent || 0) * 628) / 100} 628`}
+                strokeDashoffset={`-${(((stats as any).choice1Percent || 0) * 628) / 100}`}
+                transform="rotate(-90 150 150)"
+                className="stats-donut"
+                style={{
+                  filter: 'drop-shadow(0 0 10px var(--neon-red))'
+                }}
+              />
+              
+              {/* Center Text */}
+              <text x="150" y="140" textAnchor="middle" className="text-2xl font-bold fill-white">
+                Choices
+              </text>
+              <text x="150" y="160" textAnchor="middle" className="text-sm fill-gray-300">
+                Made by Others
+              </text>
+            </svg>
+          </div>
+          
+          {/* Legend */}
+          <div className="grid grid-cols-2 gap-6 mt-8">
+            <div className="text-center">
+              <div className="flex items-center justify-center mb-2">
+                <div className="w-4 h-4 rounded-full mr-2" style={{ backgroundColor: 'var(--neon-green)' }}></div>
+                <span className="text-white font-medium">{choice1Text}</span>
+              </div>
+              <div className="text-3xl font-bold" style={{ color: 'var(--neon-green)' }}>
+                {(stats as any).choice1Percent || 0}%
+              </div>
             </div>
-            <div>
-              <div className="flex justify-between mb-2">
-                <span>{choice2Text}</span>
-                <span className="font-bold text-red-600">{(stats as any).choice2Percent || 0}%</span>
+            <div className="text-center">
+              <div className="flex items-center justify-center mb-2">
+                <div className="w-4 h-4 rounded-full mr-2" style={{ backgroundColor: 'var(--neon-red)' }}></div>
+                <span className="text-white font-medium">{choice2Text}</span>
               </div>
-              <Progress 
-                value={(stats as any).choice2Percent || 0} 
-                className="h-3 bg-gray-200"
-              />
+              <div className="text-3xl font-bold" style={{ color: 'var(--neon-red)' }}>
+                {(stats as any).choice2Percent || 0}%
+              </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Next Button */}
+      {/* Futuristic Next Button */}
       {showResults && (
         <div className="flex justify-center">
-          <Button
+          <button
             onClick={handleNextLevel}
-            className="neal-box bg-purple-500 text-white px-8 py-3 font-semibold hover:bg-purple-600 transition-colors"
+            className="glass-panel px-12 py-4 text-lg font-bold text-white hover:scale-105 transition-all duration-300"
+            style={{
+              background: 'linear-gradient(45deg, var(--neon-purple), var(--neon-blue))',
+              border: '2px solid var(--neon-purple)',
+              boxShadow: '0 0 30px rgba(159, 0, 255, 0.5)'
+            }}
           >
             {texts[language].next}
-          </Button>
+          </button>
         </div>
       )}
     </main>

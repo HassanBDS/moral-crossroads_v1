@@ -43,7 +43,10 @@ export default function Home() {
   };
 
   return (
-    <div className={`min-h-screen bg-white font-inter ${language === 'ar' ? 'rtl' : 'ltr'}`} dir={language === 'ar' ? 'rtl' : 'ltr'}>
+    <div className={`min-h-screen font-inter ${language === 'ar' ? 'rtl' : 'ltr'}`} dir={language === 'ar' ? 'rtl' : 'ltr'}>
+      {/* Animated Starfield Background */}
+      <div className="starfield-bg"></div>
+      
       <SetupModal
         isOpen={state.showSetup}
         onComplete={handleSetupComplete}
@@ -52,25 +55,25 @@ export default function Home() {
 
       {state.gameStarted && (
         <>
-          {/* Clean Neal.fun Style Header */}
-          <header className="p-6 border-b-2 border-black">
+          {/* Futuristic Header */}
+          <header className="p-6 relative z-10">
             <div className="max-w-6xl mx-auto">
               <div className="flex items-center justify-between">
                 {/* Left - MC Logo */}
-                <div className="neal-box p-4">
-                  <h1 className="text-2xl font-bold text-black">{texts[language].brand}</h1>
-                  <p className="text-xs text-gray-600 mt-1">{texts[language].brandFull}</p>
+                <div className="glass-panel p-4">
+                  <h1 className="text-3xl font-bold neon-text">{texts[language].brand}</h1>
+                  <p className="text-xs text-blue-300 mt-1">{texts[language].brandFull}</p>
                 </div>
                 
                 {/* Right - Controls */}
                 <div className="flex items-center gap-4">
                   <button
                     onClick={toggleLanguage}
-                    className="neal-box px-4 py-2 text-sm font-medium bg-white hover:bg-gray-50"
+                    className="glass-panel px-4 py-2 text-sm font-medium text-white hover:text-blue-300 transition-colors"
                   >
                     {language === 'en' ? 'العربية' : 'English'}
                   </button>
-                  <div className="neal-box px-4 py-2 text-sm bg-gray-100">
+                  <div className="glass-panel px-4 py-2 text-sm text-purple-300">
                     {texts[language].profile}
                   </div>
                   <div className="relative">
@@ -78,13 +81,18 @@ export default function Home() {
                       href="https://www.paypal.com/donate/?hosted_button_id=YOUR_BUTTON_ID"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="neal-box px-4 py-2 text-sm font-medium bg-red-500 text-white hover:bg-red-600 transition-colors"
+                      className={`glass-panel px-4 py-2 text-sm font-medium text-white transition-colors border border-red-400 ${
+                        donateAnimations > 0 ? 'donate-pulse' : ''
+                      }`}
+                      style={{
+                        background: 'linear-gradient(45deg, rgba(255, 0, 85, 0.2), rgba(255, 0, 85, 0.1))'
+                      }}
                     >
                       {texts[language].donate}
                     </a>
                     {donateAnimations > 0 && (
                       <div className="absolute -right-8 top-1/2 transform -translate-y-1/2 animate-bounce">
-                        <span className="text-red-500 text-xl">→</span>
+                        <span style={{ color: 'var(--neon-red)' }} className="text-xl">→</span>
                       </div>
                     )}
                   </div>

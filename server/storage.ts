@@ -88,7 +88,12 @@ export class MemStorage implements IStorage {
 
   async createPlayer(insertPlayer: InsertPlayer): Promise<Player> {
     const id = this.currentPlayerId++;
-    const player: Player = { ...insertPlayer, id };
+    const player: Player = { 
+      ...insertPlayer, 
+      id,
+      photoUrl: insertPlayer.photoUrl || null,
+      language: insertPlayer.language || 'en'
+    };
     this.players.set(id, player);
     return player;
   }

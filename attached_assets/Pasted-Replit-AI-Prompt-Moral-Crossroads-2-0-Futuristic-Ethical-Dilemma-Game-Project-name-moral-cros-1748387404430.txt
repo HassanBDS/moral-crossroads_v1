@@ -1,0 +1,118 @@
+Replit AI Prompt: “Moral Crossroads 2.0 – Futuristic Ethical Dilemma Game”
+
+Project name: moral-crossroads-futuristic
+
+1. Vision & Tone
+Build a sleek, neon-accented, dark-mode–friendly evolution of Moral Crossroads. Think glassmorphism panels, smooth micro-interactions, subtle 3D parallax accent on SVG characters, and fast, responsive animations. Preserve the core: two-button ethical choices, animated consequences, and voting stats—but wrap it in a cutting-edge “sci-fi lounge” aesthetic.
+
+2. Front-end Tech & Structure
+
+Frameworks: Plain HTML/CSS/JS + Tailwind CSS for utility-first styling.
+
+Animations: GSAP for complex timing, plus CSS transitions for hover/focus. Use Three.js or Lottie for subtle 3D parallax layers behind the SVG scenes.
+
+Folder layout (VS Code–ready):
+
+pgsql
+Copy
+Edit
+client/
+  index.html
+  tailwind.config.js
+  postcss.config.js
+  src/
+    css/
+      base.css       ← Import Tailwind + custom glassmorphism
+    js/
+      main.js        ← Bootstraps game & handles language toggle
+      ui.js          ← Renders header, panels, buttons
+      scenarios.js   ← JSON with EN/AR text + SVG refs
+      animations.js  ← GSAP timelines for choice → consequence
+      api.js         ← Fetch wrappers for Django REST endpoints
+    assets/
+      svgs/          ← All vector characters & futuristic buttons
+      fonts/         ← JustSquash, Composition-Regular
+UI patterns:
+
+Glassmorphic panels: translucent frosted-glass backgrounds with neon borders for header, dilemma text, choices, and consequence areas.
+
+Buttons: circular “O” and “X” with animated neon glows on hover/selection.
+
+Profile widget: floating avatar circle with metallic ring, hover to reveal “Upload photo” overlay.
+
+3. Multi-Language (EN + AR-Dialect)
+
+Load all strings from scenarios.js in both languages; drive RTL layout for Arabic via <html dir="rtl"> toggle.
+
+A persistent language switcher in the header flips text and panel alignment instantly.
+
+4. Back-end Tech & Structure
+
+Stack: Django 4.x + Django REST Framework + PostgreSQL (SQLite for local).
+
+Folder layout:
+
+bash
+Copy
+Edit
+server/
+  manage.py
+  moral_crossroads/
+    settings.py    ← enable django-translations, media settings
+    urls.py
+  game/
+    models.py      ← UserProfile (with photo), Scenario, Choice, Vote
+    serializers.py ← DRF serializers for every model
+    views.py       ← ViewSets: ScenarioView, ChoiceView, StatsView
+    urls.py        ← /api/scenarios/, /api/choices/, /api/stats/
+    translations/  ← Django `.po` for Arabic dialect
+  media/           ← Uploaded avatars
+Features:
+
+UserProfile: name, gender, optional photo upload, language preference.
+
+Scenario model: id, slug, title_en/ar, text_en/ar, svg_refs (JSON list), choice_labels_en/ar.
+
+Vote model: FK to UserProfile & Scenario, choice (1 or 2), timestamp.
+
+Stats endpoint: returns live percentages for each choice (no raw counts).
+
+Admin UI: CRUD for scenarios and SVG assets; allows you to upload new SVGs and write AR/EN copy.
+
+5. Game Flow & Animations
+
+Startup:
+
+Profile setup modal (name, gender, optional photo).
+
+“Start” pulses into view once all required fields are set.
+
+Gameplay screen:
+
+Header: Logo “MC” in neon outline, EN/AR switch, Profile avatar, Donate 💖 (neon pulse effect every 3 scenarios).
+
+Dilemma panel: glass card with the scenario text.
+
+Choices row: two circular neon buttons with text overlays; GSAP press-down + glow animation.
+
+Consequence grid: two side-by-side glass panels. On choice, animate SVG swap + micro-interactions (e.g. a breathing glow on saved group, rapid shake + “splat” on sacrificed).
+
+Stats footer: donut chart built in SVG and animated to final percentages.
+
+6. Futuristic Enhancements
+
+Parallax background: subtle animated starfield or abstract grid with Three.js behind main container.
+
+Audio cues: optional click and success/failure tones (use Web Audio API).
+
+Dark-mode toggle: complement neon aesthetic.
+
+Performance: lazy-load SVGs per scenario, cache in IndexedDB for offline demo.
+
+7. Deployment & Local VS Code Setup
+
+Client: install Node.js → npm install tailwindcss postcss autoprefixer, npx tailwindcss -i ./src/css/base.css -o ./dist/style.css --watch.
+
+Server: Python 3.11, pip install -r requirements.txt, python manage.py migrate, python manage.py runserver.
+
+VS Code tips: include .vscode/launch.json preconfigured for simultaneously launching Django and Live Server for client.

@@ -6,6 +6,8 @@ export const players = pgTable("players", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   gender: text("gender").notNull(),
+  photoUrl: text("photo_url"),
+  language: text("language").default("en"),
 });
 
 export const scenarios = pgTable("scenarios", {
@@ -32,6 +34,8 @@ export const votes = pgTable("votes", {
 export const insertPlayerSchema = createInsertSchema(players).pick({
   name: true,
   gender: true,
+  photoUrl: true,
+  language: true,
 });
 
 export const insertVoteSchema = createInsertSchema(votes).pick({
