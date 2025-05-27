@@ -71,15 +71,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const stats = await storage.getVoteStats(scenarioId);
       
       const totalVotes = stats.reduce((sum, stat) => sum + stat.count, 0);
-      const pullVotes = stats.find(s => s.choice === "pull")?.count || 0;
-      const nothingVotes = stats.find(s => s.choice === "nothing")?.count || 0;
+      const choice1Votes = stats.find(s => s.choice === "choice1")?.count || 0;
+      const choice2Votes = stats.find(s => s.choice === "choice2")?.count || 0;
       
-      const pullPercent = totalVotes > 0 ? Math.round((pullVotes / totalVotes) * 100) : 0;
-      const nothingPercent = totalVotes > 0 ? Math.round((nothingVotes / totalVotes) * 100) : 0;
+      const choice1Percent = totalVotes > 0 ? Math.round((choice1Votes / totalVotes) * 100) : 0;
+      const choice2Percent = totalVotes > 0 ? Math.round((choice2Votes / totalVotes) * 100) : 0;
 
       res.json({
-        pullPercent,
-        nothingPercent,
+        choice1Percent,
+        choice2Percent,
         totalVotes,
         rawStats: stats
       });

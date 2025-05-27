@@ -8,9 +8,10 @@ import { apiRequest } from '@/lib/queryClient';
 interface SetupModalProps {
   isOpen: boolean;
   onComplete: (playerId: number, name: string, gender: string) => void;
+  language: 'en' | 'ar';
 }
 
-export function SetupModal({ isOpen, onComplete }: SetupModalProps) {
+export function SetupModal({ isOpen, onComplete, language }: SetupModalProps) {
   const [name, setName] = useState('');
   const [gender, setGender] = useState('');
 

@@ -12,7 +12,13 @@ export const scenarios = pgTable("scenarios", {
   id: serial("id").primaryKey(),
   level: integer("level").notNull(),
   title: text("title").notNull(),
+  titleArabic: text("title_arabic"),
   description: text("description").notNull(),
+  descriptionArabic: text("description_arabic"),
+  choice1: text("choice1").notNull(),
+  choice1Arabic: text("choice1_arabic"),
+  choice2: text("choice2").notNull(),
+  choice2Arabic: text("choice2_arabic"),
   type: text("type").notNull(),
 });
 
