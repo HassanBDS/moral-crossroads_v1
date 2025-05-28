@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, json } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -8,6 +8,7 @@ export const players = pgTable("players", {
   gender: text("gender").notNull(),
   photoUrl: text("photo_url"),
   language: text("language").default("en"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const scenarios = pgTable("scenarios", {
@@ -22,6 +23,11 @@ export const scenarios = pgTable("scenarios", {
   choice2: text("choice2").notNull(),
   choice2Arabic: text("choice2_arabic"),
   type: text("type").notNull(),
+  characterCount: integer("character_count").default(5),
+  scenarioCategory: text("scenario_category").default("consequence"),
+  svgData: json("svg_data"), // Store SVG references and animation data
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const votes = pgTable("votes", {
@@ -29,6 +35,16 @@ export const votes = pgTable("votes", {
   scenarioId: integer("scenario_id").notNull(),
   choice: text("choice").notNull(),
   playerId: integer("player_id"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const adminUsers = pgTable("admin_users", {
+  id: serial("id").primaryKey(),
+  username: text("username").notNull(),
+  email: text("email").notNull(),
+  passwordHash: text("password_hash").notNull(),
+  role: text("role").default("admin"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const insertPlayerSchema = createInsertSchema(players).pick({
@@ -44,8 +60,35 @@ export const insertVoteSchema = createInsertSchema(votes).pick({
   playerId: true,
 });
 
+export const insertScenarioSchema = createInsertSchema(scenarios).pick({
+  level: true,
+  title: true,
+  titleArabic: true,
+  description: true,
+  descriptionArabic: true,
+  choice1: true,
+  choice1Arabic: true,
+  choice2: true,
+  choice2Arabic: true,
+  type: true,
+  characterCount: true,
+  scenarioCategory: true,
+  svgData: true,
+  isActive: true,
+});
+
+export const insertAdminSchema = createInsertSchema(adminUsers).pick({
+  username: true,
+  email: true,
+  passwordHash: true,
+  role: true,
+});
+
 export type InsertPlayer = z.infer<typeof insertPlayerSchema>;
 export type Player = typeof players.$inferSelect;
 export type InsertVote = z.infer<typeof insertVoteSchema>;
 export type Vote = typeof votes.$inferSelect;
 export type Scenario = typeof scenarios.$inferSelect;
+export type InsertScenario = z.infer<typeof insertScenarioSchema>;
+export type AdminUser = typeof adminUsers.$inferSelect;
+export type InsertAdmin = z.infer<typeof insertAdminSchema>;

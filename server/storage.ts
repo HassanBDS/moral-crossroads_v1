@@ -1,21 +1,41 @@
 import { 
   players, 
   scenarios, 
-  votes, 
+  votes,
+  adminUsers,
   type Player, 
   type InsertPlayer, 
   type Vote, 
   type InsertVote, 
-  type Scenario 
+  type Scenario,
+  type InsertScenario,
+  type AdminUser,
+  type InsertAdmin
 } from "@shared/schema";
+import bcrypt from 'bcryptjs';
 
 export interface IStorage {
+  // Player management
   getPlayer(id: number): Promise<Player | undefined>;
   createPlayer(player: InsertPlayer): Promise<Player>;
+  updatePlayerPhoto(id: number, photoUrl: string): Promise<Player | undefined>;
+  getAllPlayers(): Promise<Player[]>;
+  
+  // Scenario management
   getScenario(level: number): Promise<Scenario | undefined>;
   getAllScenarios(): Promise<Scenario[]>;
+  createScenario(scenario: InsertScenario): Promise<Scenario>;
+  updateScenario(id: number, scenario: Partial<InsertScenario>): Promise<Scenario | undefined>;
+  deleteScenario(id: number): Promise<boolean>;
+  
+  // Voting system
   createVote(vote: InsertVote): Promise<Vote>;
   getVoteStats(scenarioId: number): Promise<{ choice: string; count: number }[]>;
+  
+  // Admin management
+  createAdmin(admin: InsertAdmin): Promise<AdminUser>;
+  getAdminByUsername(username: string): Promise<AdminUser | undefined>;
+  authenticateAdmin(username: string, password: string): Promise<AdminUser | null>;
 }
 
 export class MemStorage implements IStorage {
