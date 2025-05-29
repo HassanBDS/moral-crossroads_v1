@@ -27,14 +27,14 @@ export default function Home() {
 
   const texts = {
     en: {
-      brand: "MC",
+      brand: "HO",
       brandFull: "MORAL CROSSROADS",
-      subtitle: "Interactive Ethical Dilemmas",
+      subtitle: "Ethical Dilemmas",
       donate: "Donate 💖",
-      profile: "Profile Board"
+      profile: "Profile"
     },
     ar: {
-      brand: "م ق",
+      brand: "HO",
       brandFull: "مفترق الأخلاق",
       subtitle: "معضلات أخلاقية تفاعلية", 
       donate: "تبرع 💖",
